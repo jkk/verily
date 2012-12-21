@@ -151,6 +151,16 @@
     keys #(and (number? %) (or (> min %) (< max %)))
     (or msg (str "must be within " min " and " max))))
 
+(defn positive [keys & [msg]]
+  (make-validator
+    keys #(and (number? %) (not (pos? %)))
+    (or msg "must be a positive number")))
+
+(defn negative [keys & [msg]]
+  (make-validator
+    keys #(and (number? %) (not (neg? %)))
+    (or msg "must be a negative number")))
+
 (defn date [keys & [msg]]
   (make-validator
     keys #(and (not (nil? %)) (not (instance? java.util.Date %)))
@@ -172,6 +182,27 @@
   (make-validator
     keys #(and (not (nil? %)) (not (.before ^java.util.Date % date)))
     (or msg (str "must be before " date))))
+
+(defn- digits [n]
+  (map #(Character/digit % 10) (str n)))
+ 
+(defn- luhn? [x]
+  (let [n (if (string? x)
+            (string/replace x #"[^0-9]" "")
+            x)
+        sum (reduce + (map
+                        (fn [d idx]
+                          (if (even? idx)
+                            (reduce + (digits (* d 2)))
+                           d))
+                        (reverse (digits n))
+                        (iterate inc 1)))]
+    (zero? (mod sum 10))))
+
+(defn luhn [keys & [msg]]
+  (make-validator
+    keys #(and (not (nil? %)) (not (luhn? %)))
+    (or msg "number is not valid")))
 
 (defn combine [& validators]
   (fn [m]
@@ -209,9 +240,12 @@
    :max-val max-val
    :at-most at-most
    :within within
+   :positive positive
+   :negative negative
    :date date
    :after after
-   :before before})
+   :before before
+   :luhn luhn})
 
 (defmulti validation->fn (fn [vspec] (first vspec)))
 

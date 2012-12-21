@@ -100,10 +100,13 @@ All validation specifications accept a key or sequence of keys. The message is a
 * `:min-val <min> <keys> [msg]` - must be at least a certain value
 * `:max-val <max> <keys> [msg]` - must be at most a certain value
 * `:within <min> <max> <keys> [msg]` - must be within a certain range (inclusive)
+* `:positive <keys> [msg]` - must be a positive number
+* `:negative <keys> [msg]` - must be a negative number
 * `:after <date> <keys> [msg]` - must be after a certain date
 * `:before <date> <keys> [msg]` - must be before a certain date
 * `:in <coll> <keys> [msg]` - must be contained within a collection
 * `:us-zip <keys> [msg]` - must be a valid US zip code
+* `:luhn <keys> [msg]` - must be pass the Luhn check (e.g., for credit card numbers)
 * Datatype validations: `:string`, `:boolean`, `:integer`, `:float`, `:decimal`, `:date`
 * Datatype collection validations: `:strings`, `:booleans`, `:integers`, `:floats`, `:decimals`, `:dates`
 
