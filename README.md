@@ -94,6 +94,8 @@ All validation specifications accept a key or sequence of keys. The message is a
 * `:exact <value> <keys> [msg]` - must be a particular value
 * `:equal <keys> [msg]` - all keys must be equal
 * `:email <keys> [msg]` - must be a valid email
+* `:url <keys> [msg]` - must be a valid URL
+* `:web-url <keys> [msg]` - must be a valid website URL (http or https)
 * `:matches <regex> <keys> [msg]` - must match a regular expression
 * `:min-length <len> <keys> [msg]` - must be a certain length (for strings or collections)
 * `:max-length <len> <keys> [msg]` - must not exceed a certain length (for strings or collections)

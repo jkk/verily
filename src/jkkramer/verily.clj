@@ -72,6 +72,20 @@
                (not (re-matches #"[^^]+@[^$]+" %))) ;RFC be damned
     (or msg "must be a valid email")))
 
+(defn web-url [keys & [msg]]
+  (make-validator
+    keys #(and (not (string/blank? %))
+               (not (re-find #"^https?://" %)))
+    (or msg "must be a valid website URL")))
+
+(defn url [keys & [msg]]
+  (make-validator
+    keys #(and (not (string/blank? %))
+               (not (try
+                      (java.net.URL. %)
+                      (catch Exception _))))
+    (or msg "must be a valid URL")))
+
 (defn string [keys & [msg]]
   (make-validator
     keys #(and (not (nil? %)) (not (string? %)))
@@ -219,6 +233,8 @@
    :in in
    :us-zip us-zip
    :email email
+   :url url
+   :web-url web-url
    :str string
    :string string
    :strs strings
