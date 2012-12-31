@@ -6,7 +6,7 @@ Map validation library for Clojure
 
 Most other validation libraries (such as [valip](https://github.com/weavejester/valip)) assume validation is done per key, rather than on a map as a whole. This makes it difficult to write multi-key validations. Validation functions in Verily take an entire map, making multi-key (or single-key) validations easy.
 
-Verily also provides a declarative, data-oriented API in addition to a conventional, functional API. Using data to describe validations has benefits in certain use cases.
+Verily also provides a declarative, data-oriented API in addition to a conventional, function-oriented API. Using data to describe validations has benefits in certain use cases.
 
 ## Installation
 
@@ -87,10 +87,13 @@ The contract for a validation function is:
 
 ### Built-in Validations
 
-All validation specifications accept a key or sequence of keys. The message is always optional. Unless `:required` is used, all validations allow `nil` or blank.
+All validation specifications accept a key or sequence of keys. The message is always optional.
 
-* `:required <keys> [msg]` - must not be blank or nil
-* `:contains <keys> [msg]` - can be blank or nil but must be present in the values map
+Unless `:required` is used, all validations allow the keys to be absent from the map, or have a `nil` value (or blank if a string-based type).
+
+* `:required <keys> [msg]` - must not be absent, blank, or nil
+* `:contains <keys> [msg]` - must not be absent, but can be blank or nil
+* `:not-blank <keys> [msg]` - may be absent but not blank or nil
 * `:exact <value> <keys> [msg]` - must be a particular value
 * `:equal <keys> [msg]` - all keys must be equal
 * `:email <keys> [msg]` - must be a valid email
