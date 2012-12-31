@@ -277,6 +277,7 @@
 (def validations-map
   {:contains contains
    :required required
+   :not-blank not-blank
    :exact exact
    :equal equal
    :matches matches
