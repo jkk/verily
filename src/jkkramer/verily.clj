@@ -4,12 +4,24 @@
 (defn seqify [x]
   (if-not (sequential? x) [x] x))
 
+(defn- expand-name
+  "Expands a name like \"foo[bar][baz]\" into [:foo :bar :baz]"
+  [name]
+  (if (or (string? name) (keyword? name))
+    (let [[_ name1 more-names] (re-matches #"^([^\[]+)((?:\[[^\]]+?\])*)$"
+                                           (clojure.core/name name))]
+      (if (seq more-names)
+        (into [(keyword name1)] (map (comp keyword second)
+                                     (re-seq #"\[([^\]]+)\]" more-names)))
+        [name]))
+    [name]))
+
 (defn make-validator [keys bad-pred msg]
   (let [bad-pred* #(try
                      (bad-pred %)
                      (catch Exception _ true))]
     (fn [m]
-      (let [bad-keys (filter #(bad-pred* (get m % ::absent))
+      (let [bad-keys (filter #(bad-pred* (get-in m (expand-name %) ::absent))
                              (seqify keys))]
         (when (seq bad-keys)
           (if (map? msg)
@@ -44,7 +56,7 @@
 (defn equal [keys & [msg]]
   (let [keys (seqify keys)]
     (fn [m]
-      (when-not (apply = (map #(get m %) keys))
+      (when-not (apply = (map #(get-in m (expand-name %)) keys))
         (if (map? msg)
           msg
           {:keys keys :msg (or msg "must be equal")})))))
