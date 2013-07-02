@@ -13,7 +13,7 @@ Verily also provides a declarative, data-oriented API in addition to a conventio
 Leiningen:
 
 ```clj
-[jkkramer/verily "0.4.3"]
+[jkkramer/verily "0.4.4"]
 ```
 
 ## Usage
@@ -110,6 +110,7 @@ Unless `:required` is used, all validations allow the keys to be absent from the
 * `:after <date> <keys> [msg]` - must be after a certain date
 * `:before <date> <keys> [msg]` - must be before a certain date
 * `:in <coll> <keys> [msg]` - must be contained within a collection
+* `:every-in <coll> <keys> [msg]` - each value must be within a collection (for values that are themselves collections)
 * `:us-zip <keys> [msg]` - must be a valid US zip code
 * `:luhn <keys> [msg]` - must be pass the Luhn check (e.g., for credit card numbers)
 * Datatype validations: `:string`, `:boolean`, `:integer`, `:float`, `:decimal`, `:date` (plus aliases)

@@ -91,6 +91,15 @@
                  (not (contains? coll-set %)))
       (or msg (str "not an accepted value")))))
 
+(defn every-in [coll keys & [msg]]
+  (let [coll-set (if (set? coll)
+                   coll (set coll))]
+    (make-validator
+      keys #(and (not= ::absent %)
+                 (not (nil? %))
+                 (not (every? (fn [x] (contains? coll-set x)) %)))
+      (or msg (str "not an accepted value")))))
+
 (def ^:private zip-regex #"^\d{5}(?:[-\s]\d{4})?$")
 
 (defn us-zip [keys & [msg]]
@@ -296,6 +305,7 @@
    :min-length min-length
    :max-length max-length
    :in in
+   :every-in every-in
    :us-zip us-zip
    :email email
    :url url
