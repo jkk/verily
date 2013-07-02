@@ -308,12 +308,16 @@
    :boolean bool
    :bools bools
    :booleans bools
+   :int integer
+   :ints integers
    :integer integer
    :integers integers
    :floating-point floating-point
    :floating-points floating-points
    :float floating-point
    :floats floating-points
+   :bigint decimal
+   :bigints decimals
    :decimal decimal
    :decimals decimals
    :min-val min-val
@@ -324,6 +328,7 @@
    :positive positive
    :negative negative
    :date date
+   :dates dates
    :after after
    :before before
    :luhn luhn})

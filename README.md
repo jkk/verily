@@ -13,7 +13,7 @@ Verily also provides a declarative, data-oriented API in addition to a conventio
 Leiningen:
 
 ```clj
-[jkkramer/verily "0.4.2"]
+[jkkramer/verily "0.4.3"]
 ```
 
 ## Usage
@@ -112,8 +112,8 @@ Unless `:required` is used, all validations allow the keys to be absent from the
 * `:in <coll> <keys> [msg]` - must be contained within a collection
 * `:us-zip <keys> [msg]` - must be a valid US zip code
 * `:luhn <keys> [msg]` - must be pass the Luhn check (e.g., for credit card numbers)
-* Datatype validations: `:string`, `:boolean`, `:integer`, `:float`, `:decimal`, `:date`
-* Datatype collection validations: `:strings`, `:booleans`, `:integers`, `:floats`, `:decimals`, `:dates`
+* Datatype validations: `:string`, `:boolean`, `:integer`, `:float`, `:decimal`, `:date` (plus aliases)
+* Datatype collection validations: `:strings`, `:booleans`, `:integers`, `:floats`, `:decimals`, `:dates` (plus aliases)
 
 All validation specifications have corresponding validator functions in the `jkkramer.verily` namespace, if you prefer to use those directly.
 
