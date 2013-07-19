@@ -13,7 +13,7 @@ Verily also provides a declarative, data-oriented API in addition to a conventio
 Leiningen:
 
 ```clj
-[jkkramer/verily "0.5.2"]
+[jkkramer/verily "0.5.3"]
 ```
 
 ## Usage
