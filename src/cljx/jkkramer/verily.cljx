@@ -189,9 +189,14 @@
                     (some #(not (#+clj float? #+cljs number? %)) v))))
     (or msg "must be decimal numbers")))
 
+#+clj
+(defn decimal-str? [x]
+  (and (string? x)
+       (re-matches #"[0-9\.]+" x)))
+
 (defn decimal [keys & [msg]]
   (make-validator
-    keys #(and (not= ::absent %) (not (nil? %)) (not (#+clj decimal? #+cljs number? %)))
+    keys #(and (not= ::absent %) (not (nil? %)) (not (#+clj decimal? #+cljs decimal-str? %)))
     (or msg "must be a decimal number")))
 
 (defn decimals [keys & [msg]]
@@ -199,7 +204,7 @@
     keys (fn [v]
            (and (not= ::absent v)
                 (or (and (not (nil? v)) (not (sequential? v)))
-                    (some #(not (#+clj decimal? #+cljs number? %)) v))))
+                    (some #(not (#+clj decimal? #+cljs decimal-str? %)) v))))
     (or msg "must be decimal numbers")))
 
 (defn min-val [min keys & [msg]]

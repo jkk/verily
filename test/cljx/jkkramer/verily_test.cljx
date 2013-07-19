@@ -209,7 +209,7 @@
 
 (deftest test-decimal
   #+clj (is (empty? ((v/decimal :a) {:a 1.1M})))
-  #+cljs (is (empty? ((v/decimal :a) {:a 1.1})))
+  #+cljs (is (empty? ((v/decimal :a) {:a "1.1"})))
   #+clj (is (seq ((v/decimal :a) {:a 1.1})))
   #+clj (is (seq ((v/decimal :a) {:a (float 1.1)})))
   (is (empty? ((v/decimal :a) {:a nil})))
@@ -218,7 +218,7 @@
 
 (deftest test-decimals
   #+clj (is (empty? ((v/decimals :a) {:a [1.0M 1.1M 1.2M]})))
-  #+cljs (is (empty? ((v/decimals :a) {:a [1.0 1.1 1.2]})))
+  #+cljs (is (empty? ((v/decimals :a) {:a ["1.0" "1.1" "1.2"]})))
   (is (empty? ((v/decimals :a) {:a []})))
   (is (empty? ((v/decimals :a) {:a nil})))
   (is (empty? ((v/decimals :x) m)))
