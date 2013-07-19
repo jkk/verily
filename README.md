@@ -1,19 +1,19 @@
 # Verily
 
-Map validation library for Clojure
+Map validation library for Clojure and ClojureScript
 
 ## Why
 
 Most other validation libraries (such as [valip](https://github.com/weavejester/valip)) assume validation is done per key, rather than on a map as a whole. This makes it difficult to write multi-key validations. Validation functions in Verily take an entire map, making multi-key (or single-key) validations easy.
 
-Verily also provides a declarative, data-oriented API in addition to a conventional, function-oriented API. Using data to describe validations has benefits in certain use cases.
+Verily also provides a declarative, data-oriented API in addition to a conventional, function-oriented API. Using data to describe validations has benefits in certain use cases. For instance, you can share validation specifications between Clojure and ClojureScript.
 
 ## Installation
 
 Leiningen:
 
 ```clj
-[jkkramer/verily "0.4.4"]
+[jkkramer/verily "0.5.0"]
 ```
 
 ## Usage
@@ -121,6 +121,6 @@ All validation specifications have corresponding validator functions in the `jkk
 
 ## License
 
-Copyright © 2012 Justin Kramer
+Copyright © 2012-2013 Justin Kramer
 
 Distributed under the Eclipse Public License, the same as Clojure.
