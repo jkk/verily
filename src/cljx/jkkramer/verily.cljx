@@ -189,7 +189,7 @@
                     (some #(not (#+clj float? #+cljs number? %)) v))))
     (or msg "must be decimal numbers")))
 
-#+clj
+#+cljs
 (defn decimal-str? [x]
   (and (string? x)
        (re-matches #"[0-9\.]+" x)))
