@@ -264,7 +264,7 @@
     keys #(and (not= ::absent %)
                (not (nil? %))
                (or
-                 (not (instance? #+clj Date #+cljs js/Date date))
+                 (not (instance? #+clj Date #+cljs js/Date %))
                  (not (after? % date))))
     (or msg (str "must be after " date))))
 
@@ -277,7 +277,7 @@
     keys #(and (not= ::absent %)
                (not (nil? %))
                (or
-                 (not (instance? #+clj Date #+cljs js/Date date))
+                 (not (instance? #+clj Date #+cljs js/Date %))
                  (not (before? % date))))
     (or msg (str "must be before " date))))
 
