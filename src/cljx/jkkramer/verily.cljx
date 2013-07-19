@@ -366,7 +366,8 @@
   (if-let [vfn (get validations-map (first vspec))]
     (apply vfn (rest vspec))
     (throw (ex-info
-             (str "Unknown validation " (first vspec))))))
+             (str "Unknown validation " (first vspec))
+             {:vspec (first vspec)}))))
 
 (defn validations->fn [validations]
   (apply combine (map validation->fn validations)))
