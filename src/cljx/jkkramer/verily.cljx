@@ -43,6 +43,18 @@
                             (and (string? %) (string/blank? %)))
                   (or msg "must not be blank")))
 
+(defn complete [keys & [msg]]
+  "The keys must be collections with every value present and not blank"
+  (let [bad? #(or (= ::absent %)
+                  (nil? %)
+                  (and (string? %) (string/blank? %)))]
+    (make-validator
+      keys #(or (bad? %)
+                (not (coll? %))
+                (and (map? %) (some bad? (vals %)))
+                (and (coll? %) (some bad? %)))
+      (or msg (str "must not be incomplete")))))
+
 (defn not-blank
   "If present, the keys must not be blank."
   [keys & [msg]]
@@ -315,6 +327,7 @@
 (def validations-map
   {:contains contains
    :required required
+   :complete complete
    :not-blank not-blank
    :exact exact
    :equal equal
