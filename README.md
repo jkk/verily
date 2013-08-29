@@ -89,6 +89,8 @@ The contract for a validation function is:
 
 All validation specifications accept a key or sequence of keys. The message is always optional.
 
+Keys can be dotted keywords such as `:foo.bar`, which will be interpreted as a nested path (if the `:foo.bar` key does not exist in the top-level map). Strings such as "foo[bar]" are also allowed, and have the same semantics.
+
 Unless `:required` is used, all validations allow the keys to be absent from the map, or have a `nil` value (or blank if a string-based type).
 
 * `:required <keys> [msg]` - must not be absent, blank, or nil

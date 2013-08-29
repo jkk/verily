@@ -6,15 +6,17 @@
   (if-not (sequential? x) [x] x))
 
 (defn- expand-name
-  "Expands a name like \"foo[bar][baz]\" into [:foo :bar :baz]"
+  "Expands a name like \"foo[bar][baz]\" or :foo.bar.baz into [:foo :bar :baz]"
   [name]
   (if (or (string? name) (keyword? name))
-    (let [[_ name1 more-names] (re-matches #"^([^\[]+)((?:\[[^\]]+?\])*)$"
-                                           (clojure.core/name name))]
+    (let [name-str (clojure.core/name name)
+          [_ name1 more-names] (re-matches #"^([^\[]+)((?:\[[^\]]+?\])*)$"
+                                           name-str)]
       (if (seq more-names)
         (into [(keyword name1)] (map (comp keyword second)
                                      (re-seq #"\[([^\]]+)\]" more-names)))
-        [name]))
+        (let [parts (string/split name-str #"\.")]
+          (mapv keyword parts))))
     [name]))
 
 (defn make-validator [keys bad-pred msg]
@@ -22,7 +24,7 @@
                      (bad-pred %)
                      (catch #+clj Exception #+cljs js/Error _ true))]
     (fn [m]
-      (let [bad-keys (filter #(bad-pred* (get-in m (expand-name %) ::absent))
+      (let [bad-keys (filter #(bad-pred* (get m % (get-in m (expand-name %) ::absent)))
                              (seqify keys))]
         (when (seq bad-keys)
           (if (map? msg)
@@ -69,7 +71,7 @@
 (defn equal [keys & [msg]]
   (let [keys (seqify keys)]
     (fn [m]
-      (when-not (apply = (map #(get-in m (expand-name %)) keys))
+      (when-not (apply = (map #(get m % (get-in m (expand-name %))) keys))
         (if (map? msg)
           msg
           {:keys keys :msg (or msg "must be equal")})))))

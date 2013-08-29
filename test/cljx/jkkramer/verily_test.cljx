@@ -17,7 +17,10 @@
    :i "foo"
    :j [1 2 3]
    :k ["a" "b" "c"]
-   :l []})
+   :l []
+   :n {:o 1 :p 2}
+   :n.p 3
+   "n[p]" 3})
 
 (deftest test-problems
   (is (= #{{:keys [:a] :msg "must be a string"}
@@ -41,10 +44,14 @@
 (deftest test-required
   (is (empty? ((v/required :a) m)))
   (is (empty? ((v/required [:a :c :e]) m)))
+  (is (empty? ((v/required :n.o) m)))
+  (is (empty? ((v/required "n[o]") m)))
   (is (seq ((v/required :x) m)))
   (is (seq ((v/required [:a :x]) m)))
   (is (seq ((v/required :f) m)))
-  (is (seq ((v/required :g) m))))
+  (is (seq ((v/required :g) m)))
+  (is (seq ((v/required :n.q) m)))
+  (is (seq ((v/required "n[q]") m))))
 
 (deftest test-not-blank
   (is (empty? ((v/not-blank :a) m)))
@@ -61,7 +68,9 @@
   (is (empty? ((v/exact "foo" [:d :i]) m)))
   (is (empty? ((v/exact "whatever" :x) m)))
   (is (empty? ((v/exact "" :f) m)))
-  (is (empty? ((v/exact nil :g) m))))
+  (is (empty? ((v/exact nil :g) m)))
+  (is (empty? ((v/exact 3 :n.p) m)))
+  (is (empty? ((v/exact 3 "n[p]") m))))
 
 (deftest test-equal
   (is (empty? ((v/equal [:d :i]) m)))
