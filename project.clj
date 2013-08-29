@@ -1,4 +1,4 @@
-(defproject jkkramer/verily "0.5.5"
+(defproject jkkramer/verily "0.6.0"
   :description "Map validation library"
   :url "https://github.com/jkk/verily"
   :license {:name "Eclipse Public License"
