@@ -136,7 +136,7 @@
                (not (string/blank? %))
                (or #+clj (not (try
                                 (java.net.URL. %)
-                                (catch Exception)))
+                                (catch Exception _)))
                    (not (re-find #"^https?://" %))))
     (or msg "must be a valid website URL")))
 
