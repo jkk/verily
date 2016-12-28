@@ -134,10 +134,9 @@
   (make-validator
     keys #(and (not= ::absent %)
                (not (string/blank? %))
-               (or (not (try
-                          ;; TODO: better cljs impl
-                          #+clj (java.net.URL. %) #+cljs true
-                          (catch #+clj Exception #+cljs js/Error _)))
+               (or #+clj (not (try
+                                (java.net.URL. %)
+                                (catch Exception)))
                    (not (re-find #"^https?://" %))))
     (or msg "must be a valid website URL")))
 
