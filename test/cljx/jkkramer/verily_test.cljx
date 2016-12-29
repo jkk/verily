@@ -128,6 +128,17 @@
   (is (empty? ((v/email :a) {:a ""})))
   (is (empty? ((v/email :x) m))))
 
+(deftest test-link-url
+  (is (empty? ((v/link-url :a) {:a "http://example.com/"})))
+  (is (empty? ((v/link-url :a) {:a "https://example.com/foo"})))
+  (is (empty? ((v/link-url :a) {:a "//example.com/foo/bar"})))
+  (is (seq ((v/link-url :a) {:a "ftp://example.com/"})))
+  (is (seq ((v/link-url :a) {:a "example.com/"})))
+  (is (seq ((v/link-url :a) {:a "://example.com/"})))
+  (is (empty? ((v/link-url :a) {:a nil})))
+  (is (empty? ((v/link-url :a) {:a ""})))
+  (is (empty? ((v/link-url :x) m))))
+
 (deftest test-web-url
   (is (empty? ((v/web-url :a) {:a "http://example.com/"})))
   (is (empty? ((v/web-url :a) {:a "https://example.com/foo"})))

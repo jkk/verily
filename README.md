@@ -101,6 +101,7 @@ Unless `:required` is used, all validations allow the keys to be absent from the
 * `:email <keys> [msg]` - must be a valid email
 * `:url <keys> [msg]` - must be a valid URL
 * `:web-url <keys> [msg]` - must be a valid website URL (http or https)
+* `:link-url <keys> [msg]` - must be a valid link URL (can be relative, http: or https: may be omitted)
 * `:matches <regex> <keys> [msg]` - must match a regular expression
 * `:min-length <len> <keys> [msg]` - must be a certain length (for strings or collections)
 * `:max-length <len> <keys> [msg]` - must not exceed a certain length (for strings or collections)

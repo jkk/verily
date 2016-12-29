@@ -134,10 +134,10 @@
   (make-validator
     keys #(and (not= ::absent %)
                (not (string/blank? %))
-               (or (not (try
-                          ;; TODO: better cljs impl
-                          #+clj (java.net.URL. %) #+cljs true
-                          (catch #+clj Exception #+cljs js/Error _)))
+               (or #+clj (not (try
+                                (java.net.URL. %)
+                                (catch Exception _)))
+                   ;; TODO: better cljs impl
                    (not (re-find #"^https?://" %))))
     (or msg "must be a valid website URL")))
 
@@ -150,6 +150,16 @@
                       #+clj (java.net.URL. %) #+cljs (re-find #"^[a-zA-Z]+://" %)
                       (catch #+clj Exception #+cljs js/Error _))))
     (or msg "must be a valid URL")))
+
+(defn link-url
+  "like web-url but http or https may be omitted for a relative link"
+  [keys & [msg]]
+  (make-validator
+    keys #(and
+            (not= ::absent %)
+            (not (string/blank? %))
+            (not (re-find #"(^//)|(^https?://)" %)))
+    (or msg "must be a valid link URL (can be relative, http: or https: may be omitted)")))
 
 (defn string [keys & [msg]]
   (make-validator
@@ -342,6 +352,7 @@
    :email email
    :url url
    :web-url web-url
+   :link-url link-url
    :str string
    :string string
    :strs strings
