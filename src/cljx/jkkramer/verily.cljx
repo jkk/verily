@@ -137,6 +137,7 @@
                (or #+clj (not (try
                                 (java.net.URL. %)
                                 (catch Exception _)))
+                   ;; TODO: better cljs impl
                    (not (re-find #"^https?://" %))))
     (or msg "must be a valid website URL")))
 
